@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>Task #3</title>
+    <style>
+        h3 {
+            margin: 0;
+            padding: 0;
+        }
+
+        .task3 {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .accordion {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .accordion-item {
+            width: 600px;
+            border-bottom: 1px solid #ffffff;
+        }
+
+        .accordion-item-title {
+            background-color: #ff9c1d;
+            border-radius: 5px 5px 0 0;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .accordion-item-title::after {
+            content: "+";
+            font-size: 30px;
+            font-weight: bold;
+            margin-left: 10px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+
+        .accordion-item.open .accordion-item-title::after {
+            transform: rotate(45deg);
+        }
+
+        .accordion-item-content {
+            border: 2px solid #ff6b08;
+            border-radius: 0 0 5px 5px;
+            background-color: #f5f5f5;
+            padding: 10px 40px;
+            display: none;
+
+        }
+
+        .accordion-item.open .accordion-item-content {
+            display: block;
+        }
+
+        .accordion-item-title.active {
+            background-color: #ff6b08;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <a class="button" href="../index.html">Домой</a>
+        <h1 class="taskTitle">Задание №3</h1>
+    </div>
+    <div class="task3">
+        <div class="accordion">
+            <div class="accordion-item">
+                <h3 class="accordion-item-title">HTML</h3>
+                <div class="accordion-item-content">
+                    <p>HTML (HyperText Markup Language) is a markup language used to create and structure content for
+                        the web. It is the
+                        foundation of web development and is used to create the structure and content of web pages. HTML
+                        is made up of a series
+                        of tags that are used to define the different elements of a web page, such as headings,
+                        paragraphs, images, and links.</p>
+                    <p>HTML documents are made up of a series of elements, which are enclosed in angle brackets.
+                        Elements can be nested
+                        within
+                        each other and can contain content such as text and other elements. HTML documents also use
+                        attributes to provide
+                        additional information about elements, such as the source URL of an image or the target URL of a
+                        link.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-item-title">CSS</h3>
+                <div class="accordion-item-content">
+                    <p>CSS (Cascading Style Sheets) is a stylesheet language used to describe the presentation of a
+                        document written in HTML or
+                        XML. It is used to add style, layout, and formatting to web pages, and is an essential component
+                        of modern web
+                        development.</p>
+                    <p>CSS allows developers to separate the presentation of a document from its structure and content,
+                        which provides
+                        greater
+                        flexibility and control over the appearance of a web page. CSS is used to define styles for
+                        elements such as text,
+                        images, and other HTML elements, and can be used to add effects such as animation and
+                        transitions.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-item-title">JS</h3>
+                <div class="accordion-item-content">
+                    <p>JavaScript is a programming language that is used to create dynamic and interactive web pages. It
+                        was first developed
+                        in
+                        1995 by Brendan Eich while he was working at Netscape Communications. JavaScript is an
+                        object-oriented language that
+                        is
+                        based on a prototype model, which means that objects inherit properties and methods from other
+                        objects.</p>
+
+                    <p>JavaScript can be used to create a wide range of applications, including web-based games, web
+                        applications, and
+                        mobile
+                        apps. It is often used in combination with other web development technologies such as HTML and
+                        CSS to create rich,
+                        interactive web experiences.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const accordionItems = document.querySelectorAll('.accordion-item');
+
+        accordionItems.forEach(item => {
+            const title = item.querySelector('.accordion-item-title');
+            const content = item.querySelector('.accordion-item-content');
+
+            title.addEventListener('click', () => {
+                const isOpen = item.classList.contains('open');
+                accordionItems.forEach(item => {
+                    item.classList.remove('open');
+                    item.querySelector('.accordion-item-title').classList.remove('active');
+                });
+                if (!isOpen) {
+                    item.classList.add('open');
+                    title.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

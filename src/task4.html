@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+    <title>Task #4</title>
+    <style>
+        h1 {
+            margin: 0;
+        }
+
+        .title {
+            margin-bottom: 30px;
+        }
+
+        .task4 {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .calendar {
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+            margin-bottom: 40px;
+        }
+
+        #weekends {
+            margin-top: 10px;
+        }
+
+        .btn {
+            display: block;
+            text-align: center;
+            color: #212121;
+            background-color: transparent;
+            padding: 10px 20px;
+            list-style: none;
+            border: 1px solid #ff6b08;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: .3s;
+            user-select: none;
+        }
+
+        .btn:hover {
+            background-color: #ff6b08;
+            color: #ffffff;
+            border-color: #ff6b08;
+            box-shadow: 0px 0px 5px 2px rgba(255, 107, 8, 0.29);
+            transition: .15s ease-in-out;
+        }
+
+        select {
+            display: block;
+            text-align: center;
+            color: #212121;
+            background-color: transparent;
+            padding: 10px 20px;
+            list-style: none;
+            border: 1px solid #ff6b08;
+            border-radius: 15px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: .3s;
+            user-select: none;
+            margin-right: 40px;
+        }
+
+        option {
+            background-color: #ffffff;
+        }
+
+        input {
+            display: block;
+            color: #212121;
+            padding: 10px 0 10px 0;
+            text-align: center;
+            list-style: none;
+            border: 1px solid #ff6b08;
+            border-radius: 15px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: .3s;
+            outline: none;
+            margin-right: 20px;
+        }
+
+        input:active,
+        input:focus,
+        select:focus,
+        select:active {
+            outline: none;
+            border: 1px solid #212121;
+        }
+
+        .name {
+            margin-right: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <a class="button homeBtn" href="../index.html">Домой</a>
+        <h1 class="taskTitle">Задание №4</h1>
+    </div>
+    <div class="task4">
+        <h1 class="title">Календарь</h1>
+        <form class="calendar" method="POST" onsubmit="return(false)">
+            <p class="name">Год:</p>
+            <input required type="text" id="year" maxlength="5" />
+            <p class="name">Месяц:</p>
+            <select id="month">
+                <option value="0">Январь</option>
+                <option value="1">Февраль</option>
+                <option value="2">Март</option>
+                <option value="3">Апрель</option>
+                <option value="4">Май</option>
+                <option value="5">Июнь</option>
+                <option value="6">Июль</option>
+                <option value="7">Август</option>
+                <option value="8">Сентябрь</option>
+                <option value="9">Октябрь</option>
+                <option value="10">Ноябрь</option>
+                <option value="11">Декабрь</option>
+            </select>
+
+            <input class="btn" type="submit" value="Создать календарь" onclick="generateCalendar()" />
+        </form>
+        <table id="calendar"></table>
+        <div id="weekends"></div>
+    </div>
+    <script>
+
+        const yearInput = document.getElementById("year");
+        yearInput.addEventListener("input", function () {
+            yearInput.value = yearInput.value.replace(/\D/g, '');
+        });
+
+        function generateCalendar() {
+            const yearInput = document.getElementById("year");
+            if (yearInput.value === '') {
+                return;
+            }
+            const year = parseInt(yearInput.value);
+            const month = parseInt(document.getElementById("month").value);
+
+            const calendar = document.getElementById("calendar");
+            const weekends = document.getElementById("weekends");
+
+            const date = new Date(year, month, 1);
+
+            const headerRow = "<tr><th>Пн</th><th>Вт</th><th>Ср</th><th>Чт</th><th>Пт</th><th>Сб</th><th>Вс</th></tr>";
+
+            let currentRow = "<tr>";
+            let currentDayOfWeek = date.getDay() - 1;
+            if (currentDayOfWeek == -1) {
+                currentDayOfWeek = 6;
+            }
+            for (let i = 0; i < currentDayOfWeek; i++) {
+                currentRow += "<td></td>";
+            }
+            while (date.getMonth() == month) {
+                currentRow += "<td>" + date.getDate() + "</td>";
+                currentDayOfWeek++;
+                if (currentDayOfWeek == 7) {
+                    currentDayOfWeek = 0;
+                    currentRow += "</tr><tr>";
+                }
+                date.setDate(date.getDate() + 1);
+            }
+            while (currentDayOfWeek > 0 && currentDayOfWeek < 7) {
+                currentRow += "<td></td>";
+                currentDayOfWeek++;
+            }
+            currentRow += "</tr>";
+
+            calendar.innerHTML = headerRow + currentRow;
+
+            const weekendCount = countWeekends(year, month);
+            weekends.innerHTML = `Количество выходных дней: <h1>${weekendCount}</h1>`;
+        }
+        function countWeekends(year, month) {
+            const date = new Date(year, month, 1);
+            let weekendCount = 0;
+            while (date.getMonth() === month) {
+                const dayOfWeek = date.getDay();
+                if (dayOfWeek === 0 || dayOfWeek === 6) {
+                    weekendCount++;
+                }
+                date.setDate(date.getDate() + 1);
+            }
+            return weekendCount;
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+    <title>Task #1</title>
+    <style>
+        .task1 {
+            text-align: center;
+        }
+
+        .task1 h1 {
+            margin-bottom: 60px;
+        }
+
+        .task1 p {
+            font-size: 20px;
+        }
+
+        .task1 p span {
+            font-weight: 600;
+            font-size: 26px;
+        }
+
+        .slider {
+            -webkit-appearance: none;
+            width: 50%;
+            height: 10px;
+            margin-bottom: 40px;
+            background: #ddd;
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #2196F3;
+            cursor: pointer;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #2196F3;
+            cursor: pointer;
+            border-radius: 0%;
+            border: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <a class="button task-button" href="../index.html">Домой</a>
+        <h1 class="taskTitle">Задание №1</h1>
+    </div>
+    <div class="task1">
+        <h1>Трекбар</h1>
+        <input type="range" min="0" max="100" value="50" class="slider" id="myRange">
+        <p>Значение трекбара: <span id="demo"></span></p>
+    </div>
+    <script>
+
+        const slider = document.getElementById("myRange");
+        const output = document.getElementById("demo");
+        output.textContent = slider.value;
+
+        slider.addEventListener("input", () => {
+            output.textContent = slider.value;
+        });
+
+    </script>
+</body>
+
+</html>
